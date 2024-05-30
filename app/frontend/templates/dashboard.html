@@ -1,0 +1,19 @@
+{% extends "components/base_protected.html" %}
+{% block content %}
+<div class="container mt-2">
+    <div class="tab-content responsive">
+        <div class="tab-pane fade show active" id="routines">
+            {% include "components/routines.html" %}
+        </div>
+        <div class="tab-pane fade" id="history">
+            {% include "components/records.html" %}
+        </div>
+        <div class="tab-pane fade" id="stats">
+            {% include "components/records.html" %}
+        </div>
+        <div class="tab-pane fade" id="account">
+            <p>Account settings and logout</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
