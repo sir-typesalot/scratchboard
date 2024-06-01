@@ -1,11 +1,10 @@
 
 CREATE TABLE boards (
-    `hash` CHAR(56) NOT NULL,
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `hash` CHAR(56) NOT NULL UNIQUE,
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(25) NOT NULL,
     `is_active` BOOLEAN DEFAULT 1,
-    `create_datetime` DATETIME DEFAULT NOW(),
-    PRIMARY KEY (`hash`, `id`)
+    `create_datetime` DATETIME DEFAULT NOW()
 );
 
 CREATE TABLE board_tags (

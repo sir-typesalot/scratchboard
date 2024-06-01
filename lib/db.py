@@ -4,8 +4,8 @@ import mysql.connector
 from dotenv import load_dotenv
 
 class DB(object):
-    
-    def __init__(self, db='gym_journal'):
+
+    def __init__(self, db='scratchboard'):
         self.db = db
 
     @contextlib.contextmanager

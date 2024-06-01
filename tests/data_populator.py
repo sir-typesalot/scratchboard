@@ -4,7 +4,7 @@ def populate_boards():
     with get_db() as cursor:
         cursor.execute("""
             INSERT INTO boards (hash, name, is_active) VALUES
-            ('04bda9501c4b88cae4643821a47f33670e553bed1222dbf6edc24e35', 'Test Project', 1)
+            ('164b2551025f1ed0261a33febdd5d75435c987de8854f2b1cda909c0', 'Test Project', 1)
         """)
 
 def populate_tags():
