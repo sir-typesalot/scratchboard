@@ -6,7 +6,7 @@ logging.basicConfig(level = logging.INFO)
 class BaseModel(object):
 
     def __init__(self):
-        self.logger = logging.getLogger("base_logger")
+        self.logger = logging.getLogger("datamodel")
         self.db = Scribe()
 
     def sanitize(self, data: dict, headers: list):

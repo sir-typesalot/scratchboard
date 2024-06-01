@@ -1,81 +1,38 @@
 
-CREATE TABLE `routine` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(100) NOT NULL COMMENT 'name of routine',
-	`description` VARCHAR(255) COMMENT 'description of routine',
-	`create_datetime` DATETIME NOT NULL,
-	`modify_datetime` DATETIME,
-	PRIMARY KEY (`id`)
+CREATE TABLE boards (
+    `hash` CHAR(56) NOT NULL,
+    `id` INT NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(25) NOT NULL,
+    `is_active` BOOLEAN DEFAULT 1,
+    `create_datetime` DATETIME DEFAULT NOW(),
+    PRIMARY KEY (`hash`, `id`)
 );
 
-CREATE TABLE `exercises` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(100) NOT NULL,
-	`is_unilateral` BOOLEAN NOT NULL DEFAULT false,
-	`is_bodyweight` BOOLEAN NOT NULL DEFAULT false,
-	`details` JSON,
-	PRIMARY KEY (`id`)
+CREATE TABLE board_tags (
+    `board_id` INT DEFAULT NULL,
+    `tag_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `tag_name` VARCHAR(25) NOT NULL,
+    `description` VARCHAR(256) DEFAULT NULL,
+    FOREIGN KEY (`board_id`) REFERENCES `boards`(`id`)
 );
 
-CREATE TABLE `exercise_sets` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-	`exercise_id` INT NOT NULL,
-	`routine_id` INT NOT NULL,
-	`display_order` INT NOT NULL,
-	`unit` ENUM('repetition', 'time') NOT NULL,
-	`count` INT NOT NULL,
-	`details` JSON COMMENT 'Contains the rpe, rest, pct1rm, cluster_set info and more',
-	PRIMARY KEY (`id`),
-	FOREIGN KEY (`exercise_id`) REFERENCES exercises(`id`),
-	FOREIGN KEY (`routine_id`) REFERENCES routine(`id`)
+CREATE TABLE board_tasks (
+    `board_id` INT NOT NULL,
+    `task_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `tag_id` INT DEFAULT 1,
+    `title` VARCHAR(100) NOT NULL,
+    `description` VARCHAR(255) DEFAULT NULL,
+	`status` ENUM('todo', 'progress', 'done') DEFAULT 'todo',
+    `create_datetime` DATETIME DEFAULT NOW(),
+	`status_datetime` DATETIME DEFAULT NULL,
+    FOREIGN KEY (`board_id`) REFERENCES `boards`(`id`),
+    FOREIGN KEY (`tag_id`) REFERENCES `board_tags`(`tag_id`)
 );
 
-CREATE TABLE `dashboard_users` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-	`username` VARCHAR(100) NOT NULL COMMENT 'username',
-	`email` VARCHAR(255) NOT NULL COMMENT 'email',
-	`password_hash` CHAR(60) NOT NULL COMMENT 'password',
-	`create_datetime` DATETIME NOT NULL COMMENT 'date',
-	`user_id` CHAR(30) NOT NULL,
-	PRIMARY KEY (`id`)
-);
-
-CREATE TABLE `routine_user_map` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-	`routine_id` INT NOT NULL,
-	`user_id` INT NOT NULL,
-	`config` JSON,
-	PRIMARY KEY (`id`),
-	FOREIGN KEY (`routine_id`) REFERENCES routine(`id`),
-	FOREIGN KEY (`user_id`) REFERENCES dashboard_users(`id`)
-);
-
-CREATE TABLE `set_history` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-	`set_id` INT NOT NULL,
-	`unit` ENUM('repetition', 'time') NOT NULL,
-	`count` INT NOT NULL COMMENT 'reps',
-	`load` INT NOT NULL COMMENT 'lb/kg',
-	`record_date` DATETIME NOT NULL,
-	PRIMARY KEY (`id`),
-	FOREIGN KEY (`set_id`) REFERENCES exercise_sets(`id`)
-);
-
-CREATE TABLE `routine_edit_lock` (
-	`routine_id` INT NOT NULL,
-	`user_id` INT NOT NULL,
-	`start_datetime` DATETIME NOT NULL,
-	PRIMARY KEY (`routine_id`),
-	FOREIGN KEY (`routine_id`) REFERENCES routine(`id`),
-	FOREIGN KEY (`user_id`) REFERENCES dashboard_users(`id`)
-);
-
-CREATE TABLE `user_configuration` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-	`user_id` INT NOT NULL,
-	`parameter_name` VARCHAR(255) NOT NULL,
-	`parameter_value` VARCHAR(255) NOT NULL,
-	`modify_datetime` DATETIME NOT NULL,
-	PRIMARY KEY (`id`),
-	FOREIGN KEY (`user_id`) REFERENCES dashboard_users(`id`)
+CREATE TABLE task_comments (
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `task_id` INT NOT NULL,
+    `text` VARCHAR(300) NOT NULL,
+    `created_time` DATETIME NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (`task_id`) REFERENCES `board_tasks`(`task_id`)
 );

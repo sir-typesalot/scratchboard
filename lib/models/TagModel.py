@@ -1,24 +1,24 @@
 from lib.DBHandler import Scribe
 from lib.models.BaseModel import BaseModel
-from lib.DataClasses import Exercise
+from lib.DataClasses import Tag
 
-class ExerciseModel(BaseModel):
+class TagModel(BaseModel):
 
     def __init__(self):
         super().__init__()
         self.db = Scribe()
 
-    def create(self, name: str, is_unilateral: bool, is_bodyweight: bool, details: dict):
+    def create(self, board_id: int, name: str, description: str):
         # Create dataclass and convert to dict
-        exercise = Exercise(name, is_unilateral, is_bodyweight, details).dict()
+        tag = Tag(board_id, name, description).dict()
         try:
             # Derive columns and values from dict
-            columns, values = self.split(exercise)
-            id = self.db.insert('exercises', columns, values)
+            columns, values = self.split(tag)
+            id = self.db.insert('board_tags', columns, values)
             return id
         except:
             # add logging at some point
-            print("Unable to create exercise")
+            print("Unable to create tag")
 
     def exists(self, name: str):
         data = self.get({'name': name})
@@ -29,12 +29,12 @@ class ExerciseModel(BaseModel):
         if not exercise:
             return None
         else:
-            exercise = self.sanitize(exercise, Exercise.headers())
-            return Exercise(**exercise)
+            exercise = self.sanitize(exercise, Tag.headers())
+            return Tag(**exercise)
 
-    def modify(self, exercise: Exercise):
-        conditions = [f"name = '{exercise.name}'"]
-        self.db.update('exercises', exercise.dict(), conditions)
+    def modify(self, tag: Tag):
+        conditions = [f"name = '{tag.name}'"]
+        self.db.update('exercises', tag.dict(), conditions)
 
     def create_new(self, name: str, is_unilateral: bool, is_bodyweight: bool, details: dict):
         exists = self.exists(name)

@@ -1,42 +1,41 @@
 from .conftest import get_db
 
-def populate_dashboard_users():
+def populate_boards():
     with get_db() as cursor:
         cursor.execute("""
-            INSERT INTO dashboard_users (username, email, password_hash, user_id, create_datetime) VALUES
-            ('test_user', 't@gmail.com', '$2y$04$Lfxl0lAeEvh1/ek62Z81Yuaq7h.Qa2oGxh9l7uItscmkMGaDIon.C', '9fe2c4e93f654fdbb24c02b15259716c', NOW())
+            INSERT INTO boards (hash, name, is_active) VALUES
+            ('04bda9501c4b88cae4643821a47f33670e553bed1222dbf6edc24e35', 'Test Project', 1)
         """)
 
-def populate_routine():
+def populate_tags():
     with get_db() as cursor:
         cursor.execute("""
-            INSERT INTO routine (name, description, create_datetime, modify_datetime) VALUES
-            ('Test Routine', 'Just a test', NOW(), NOW()),
-            ('Routine 2', 'Testing the routine', NOW(), NOW())
+            INSERT INTO board_tags (board_id, tag_name, description) VALUES
+            (1, 'TestTag', 'Test the description')
         """)
 
-def populate_exercises():
+def populate_tasks():
     with get_db() as cursor:
         cursor.execute("""
-            INSERT INTO exercises (name, is_unilateral, is_bodyweight, details) VALUES 
-            ('Bench Press', 0, 1, '{}'),
-            ('Pullup', 0, '1', '{}'),
-            ('Meadows Row', 1, 0, '{}')
+            INSERT INTO board_tasks
+            (board_id, tag_id, title, description) VALUES
+            (1, 1, 'Test Title', 'Something here'),
+            (1, 1, 'Test Title 2', 'Something more over here')
         """)
 
-def populate_routine_map():
+def populate_comments():
     with get_db() as cursor:
         cursor.execute("""
-            INSERT INTO routine_user_map (routine_id, user_id, config) VALUES
-            (1, 1, ''),
-            (2, 1, '')
+            INSERT INTO task_comments (task_id, text) VALUES
+            (1, 'Must test how this is created'),
+            (2, 'Will have to add some more text here')
         """)
 
 table_map = {
-    'dashboard_users': populate_dashboard_users,
-    'routine': populate_routine,
-    'exercises': populate_exercises,
-    'routine_map': populate_routine_map
+    'boards': populate_boards,
+    'tags': populate_tags,
+    'exercises': populate_tasks,
+    'routine_map': populate_comments
 }
 def populate_tables(tables: list):
     for table in tables:

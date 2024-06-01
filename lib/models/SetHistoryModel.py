@@ -1,8 +1,6 @@
 from datetime import datetime
 from lib.models.BaseModel import BaseModel
 from lib.DataClasses import SetHistory
-from lib.models.ExerciseModel import ExerciseModel
-from lib.models.SetModel import SetModel
 
 class SetHistoryModel(BaseModel):
 
@@ -19,7 +17,7 @@ class SetHistoryModel(BaseModel):
             columns, values = self.split(exercise_set)
             id = self.db.insert('set_history', columns, values)
             return id
-        
+
     def get(self, search_term):
         ex_set = self.db.read('set_history', search_term)
         if not ex_set:
@@ -27,7 +25,7 @@ class SetHistoryModel(BaseModel):
         else:
             ex_set = self.sanitize(ex_set, SetHistory.headers())
             return SetHistory(**ex_set)
-        
+
     def modify(self, set: SetHistory):
         columns, values = self.split(set.dict())
         self.db.replace('exercise_sets', columns, values)
