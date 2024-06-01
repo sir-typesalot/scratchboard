@@ -1,7 +1,7 @@
-{ 
-  "name": "Gym Journal", 
-  "short_name": "GymJournal", 
-  "start_url": "https://gym-journal.com/login", 
+{
+  "name": "ScratchBoard",
+  "short_name": "ScratchBoard",
+  "start_url": "https://gym-journal.com/login",
   "display": "fullscreen",
   "icons": [{
     "src": "images/barbell-icon.png",
