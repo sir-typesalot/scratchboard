@@ -10,7 +10,7 @@ likely need a Bash terminal (Git Bash isn't a bad option).
 - Create a virtual env for this repo `python -m venv <virtual_env>`
 - Activate the virtual environment
   - For UNIX systems - `source <path_to_virtual_env>/bin/activate`
-  - For Windows systems - `<path_to_env>\Scripts\activate`
+  - For Windows systems - `<path_to_env>\Scripts\activate` if you have Git Bash `source <path_to_env>\Scripts\activate`
 - Install all the required packages - `pip install -r requirements.txt`
 
 ## Run Locally
