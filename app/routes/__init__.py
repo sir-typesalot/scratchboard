@@ -1,13 +1,11 @@
 from flask import Flask
 
-from .private import internal
-from .public import external
+from .public import app
 
 webapp = Flask(
-    __name__, 
+    __name__,
     template_folder='../frontend/templates',
     static_folder='../frontend/static'
 )
 webapp.secret_key = '93843hserj39sfsw3'
-webapp.register_blueprint(external)
-webapp.register_blueprint(internal)
+webapp.register_blueprint(app)
