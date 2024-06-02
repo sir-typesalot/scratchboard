@@ -18,9 +18,9 @@ def populate_tasks():
     with get_db() as cursor:
         cursor.execute("""
             INSERT INTO board_tasks
-            (board_id, tag_id, title, description) VALUES
-            (1, 1, 'Test Title', 'Something here'),
-            (1, 1, 'Test Title 2', 'Something more over here')
+            (board_id, tag_id, title, description, status, status_datetime) VALUES
+            (1, 1, 'Test Title', 'Something here', 'todo', '2024-06-02 19:30:26'),
+            (1, 1, 'Test Title 2', 'Something more over here', 'progress', '2024-06-02 19:30:26')
         """)
 
 def populate_comments():
