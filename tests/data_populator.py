@@ -33,9 +33,9 @@ def populate_comments():
 
 table_map = {
     'boards': populate_boards,
-    'tags': populate_tags,
-    'exercises': populate_tasks,
-    'routine_map': populate_comments
+    'board_tags': populate_tags,
+    'board_tasks': populate_tasks,
+    'task_comments': populate_comments
 }
 def populate_tables(tables: list):
     for table in tables:
