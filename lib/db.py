@@ -11,12 +11,20 @@ class DB(object):
     @contextlib.contextmanager
     def db_connect(self, cur_type=None):
         load_dotenv()
-        config = {
-            "host": os.environ.get('DB_HOST'),
-            "user": os.environ.get('DB_USER'),
-            "passwd": os.environ.get('DB_PASSWORD'),
-            "database": self.db
-        }
+        if os.environ.get('ENV') == 'live':
+            config = {
+                "host": os.environ.get('LIVE_HOST'),
+                "user": os.environ.get('LIVE_USER'),
+                "passwd": os.environ.get('LIVE_PASS'),
+                "database": self.db
+            }
+        else:
+            config = {
+                "host": os.environ.get('LOCAL_HOST'),
+                "user": os.environ.get('LOCAL_USER'),
+                "passwd": os.environ.get('LOCAL_PASS'),
+                "database": self.db
+            }
 
         cnx = mysql.connector.MySQLConnection(**config)
 

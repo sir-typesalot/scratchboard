@@ -11,8 +11,6 @@ def get_db():
 def db():
     Config.SCHEMA = '_test_db'
     yield
-    # Until tables are created, keep hidden
-    # tables = ['boards', 'board_tags', 'board_tasks', 'task_comments']
     tables = ['boards', 'board_tags', 'board_tasks']
     with get_db() as cursor:
         cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
