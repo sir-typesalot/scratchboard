@@ -32,10 +32,10 @@ class Board(BaseClass):
 @dataclass
 class Task(BaseClass):
     title: str
-    create_datetime: datetime
     description: str = ''
     status: StatusEnum = StatusEnum.TO_DO
-    status_datetime: datetime = None
+    status_datetime: datetime = datetime.now()
+    create_datetime: datetime = datetime.now()
     board_id: int = 0
     task_id: int = 0
     tag_id: int = 1
