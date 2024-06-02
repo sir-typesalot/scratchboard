@@ -12,7 +12,7 @@ variables = {
 def public():
     return render_template('home.html', data=variables)
 
-@external.route('/create-board', methods=['GET', 'POST'])
+@external.route('/create-board', methods=['POST'])
 def login():
     variables['title'] = "Create A Board"
-    return render_template('login.html', data=variables)
+    return render_template('board.html', data=variables)
