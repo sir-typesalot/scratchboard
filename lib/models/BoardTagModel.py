@@ -2,7 +2,7 @@ from lib.DBHandler import Scribe
 from lib.models.BaseModel import BaseModel
 from lib.DataClasses import Tag
 
-class TagModel(BaseModel):
+class BoardTagModel(BaseModel):
 
     def __init__(self):
         super().__init__()
@@ -25,21 +25,21 @@ class TagModel(BaseModel):
         return True if data else False
 
     def get(self, search_term: dict):
-        exercise = self.db.read('exercises', search_term)
-        if not exercise:
+        tag = self.db.read('board_tags', search_term)
+        if not tag:
             return None
         else:
-            exercise = self.sanitize(exercise, Tag.headers())
-            return Tag(**exercise)
+            tag = self.sanitize(tag, Tag.headers())
+            return Tag(**tag)
 
     def modify(self, tag: Tag):
         conditions = [f"name = '{tag.name}'"]
-        self.db.update('exercises', tag.dict(), conditions)
+        self.db.update('board_tags', tag.dict(), conditions)
 
     def create_new(self, name: str, is_unilateral: bool, is_bodyweight: bool, details: dict):
         exists = self.exists(name)
         if exists:
-            raise NameError(f"Exercise {name} already exists")
+            raise NameError(f"Tag {name} already exists")
         else:
             id = self.create(name, is_unilateral, is_bodyweight, details)
             return id
@@ -49,4 +49,4 @@ class TagModel(BaseModel):
             'name': name
         }
         conditions = ["name = %(name)s"]
-        self.db.drop('exercises', values, conditions)
+        self.db.drop('board_tags', values, conditions)

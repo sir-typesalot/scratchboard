@@ -43,7 +43,7 @@ class BoardModel(BaseModel):
         hash = BoardModel.generate_hash(seed)
         exists = self.exists(hash)
         if exists:
-            raise NameError(f"Board hash: {hash} already exists")
+            raise NameError(f"Hash: {hash} already exists")
         else:
             id = self.create(hash, name)
             return id
