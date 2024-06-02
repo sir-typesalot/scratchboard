@@ -15,12 +15,12 @@ def test_create_new_error(db):
         BoardModel().create_new('test hashing', 'Test Project')
 
 @pytest.mark.parametrize("seed, expected", [
-    ('test hashing', '164b2551025f1ed0261a33febdd5d75435c987de8854f2b1cda909c0')
+    ('test hash', 'bb5d944c0fcda36e4912245f1b295a612107f35bf8e7ab4e2b9bbb5f')
 ])
 def test_generate_hash(seed, expected):
     assert expected == BoardModel.generate_hash(seed)
 
-def test_modify_exercise(db):
+def test_modify_board(db):
     populate_tables(['boards'])
     board = BoardModel().get({'hash': '164b2551025f1ed0261a33febdd5d75435c987de8854f2b1cda909c0'})
     board.name = 'Changed Name'

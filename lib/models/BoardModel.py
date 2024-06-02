@@ -32,8 +32,8 @@ class BoardModel(BaseModel):
         if not board:
             return None
         else:
-            exercise = self.sanitize(exercise, Board.headers())
-            return Board(**exercise)
+            board = self.sanitize(board, Board.headers())
+            return Board(**board)
 
     def modify(self, board: Board):
         conditions = [f"hash = '{board.hash}'"]
@@ -58,4 +58,4 @@ class BoardModel(BaseModel):
     @classmethod
     def generate_hash(cls, seed: str):
         buffer = bytes(seed, 'utf-8')
-        return hashlib.sha256(buffer).hexdigest()
+        return hashlib.sha224(buffer).hexdigest()
