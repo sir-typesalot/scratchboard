@@ -13,7 +13,7 @@ def db():
     yield
     # Until tables are created, keep hidden
     # tables = ['boards', 'board_tags', 'board_tasks', 'task_comments']
-    tables = ['boards']
+    tables = ['boards', 'board_tags']
     with get_db() as cursor:
         cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
         for table in tables:

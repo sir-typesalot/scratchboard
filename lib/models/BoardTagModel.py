@@ -8,20 +8,21 @@ class BoardTagModel(BaseModel):
         super().__init__()
         self.db = Scribe()
 
-    def create(self, board_id: int, name: str, description: str):
+    def create(self, name: str, board_id: int = 0, description: str = ''):
         # Create dataclass and convert to dict
-        tag = Tag(board_id, name, description).dict()
+        tag = Tag(tag_name=name, board_id=board_id, description=description).dict()
         try:
             # Derive columns and values from dict
             columns, values = self.split(tag)
             id = self.db.insert('board_tags', columns, values)
             return id
-        except:
+        except Exception as e:
+            print(e)
             # add logging at some point
             print("Unable to create tag")
 
-    def exists(self, name: str):
-        data = self.get({'name': name})
+    def exists(self, name: str, board_id: int):
+        data = self.get({'tag_name': name, 'board_id': board_id})
         return True if data else False
 
     def get(self, search_term: dict):
@@ -33,20 +34,20 @@ class BoardTagModel(BaseModel):
             return Tag(**tag)
 
     def modify(self, tag: Tag):
-        conditions = [f"name = '{tag.name}'"]
+        conditions = [f"tag_id = '{tag.tag_id}'"]
         self.db.update('board_tags', tag.dict(), conditions)
 
-    def create_new(self, name: str, is_unilateral: bool, is_bodyweight: bool, details: dict):
-        exists = self.exists(name)
+    def create_new(self, board_id, name, description):
+        exists = self.exists(name, board_id)
         if exists:
-            raise NameError(f"Tag {name} already exists")
+            raise NameError(f"Tag {name} for board {board_id} already exists")
         else:
-            id = self.create(name, is_unilateral, is_bodyweight, details)
+            id = self.create(name, board_id, description)
             return id
 
-    def delete(self, name: str):
+    def delete(self, tag_id: int):
         values = {
-            'name': name
+            'tag_id': tag_id
         }
-        conditions = ["name = %(name)s"]
+        conditions = ["tag_id = %(tag_id)s"]
         self.db.drop('board_tags', values, conditions)
