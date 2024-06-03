@@ -12,22 +12,27 @@
     --light-secondary: #C72C41;
     --crimson: #801336;
     --dark-medium: #510A32;
-    --dark-base: #1D142C;
+
+    --dark-base: #2E3440;
+    --blue-light: #81A1C1;
+    --blue-med: #4C566A;
+    --blue-dark: #3B4252;
+
 }
 html { min-height: 100% }
 body {
     font-family: 'Libre Franklin', sans-serif !important;
-    background: var(--light-primary);
-    background: linear-gradient(0deg, var(--light-primary) 12%, var(--light-secondary) 27%, var(--crimson) 41%, var(--dark-base) 75%);
+    background: var(--dark-base);
+    /* background: linear-gradient(0deg, var(--light-primary) 12%, var(--light-secondary) 27%, var(--crimson) 41%, var(--dark-base) 75%); */
     color: var(--white);
 }
 .navbar, .navbar-brand, .nav-link {
-    background-color: var(--light-secondary) !important;
+    background-color: var(--blue-med) !important;
     font-weight: 500;
     color: var(--white) !important;
 }
 .bg-dark {
-    background: var(--dark-base) !important;
+    background: var(--blue-med) !important;
     color: var(--white) !important;
 }
 .bg-dark-max {
@@ -70,9 +75,21 @@ body {
 
     border-radius: 10px;
 }
-.form-group {
+.form-group{
+    margin: .5em .5em;
+    text-align: center;
+    
+}
+.form-control {
     width: 50%;
-    margin-top: .5em;
+    
+}
+.form-text {
+    color: var(--blue-light);
+}
+.btn {
+    width: 25%;
+    margin: .5em .5em;
 }
 input {
     margin: .5em 0rem;
