@@ -4,7 +4,7 @@
 import argparse
 from flask import Flask
 from waitress import serve
-from app.routes import webapp
+from app import webapp
 
 if __name__ == '__main__':
 

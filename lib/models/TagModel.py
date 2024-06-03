@@ -2,7 +2,7 @@ from lib.DBHandler import Scribe
 from lib.models.BaseModel import BaseModel
 from lib.DataClasses import Tag
 
-class BoardTagModel(BaseModel):
+class TagModel(BaseModel):
 
     def __init__(self):
         super().__init__()

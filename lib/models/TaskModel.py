@@ -2,7 +2,7 @@ from lib.DBHandler import Scribe
 from lib.models.BaseModel import BaseModel
 from lib.DataClasses import Task
 
-class BoardTaskModel(BaseModel):
+class TaskModel(BaseModel):
 
     def __init__(self):
         super().__init__()

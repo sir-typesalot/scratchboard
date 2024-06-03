@@ -33,7 +33,7 @@ class Board(BaseClass):
 class Task(BaseClass):
     title: str
     description: str = ''
-    status: StatusEnum = StatusEnum.TO_DO
+    status: StatusEnum = StatusEnum.TO_DO.value
     status_datetime: datetime = datetime.now()
     create_datetime: datetime = datetime.now()
     board_id: int = 0

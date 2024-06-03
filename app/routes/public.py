@@ -1,6 +1,7 @@
 from flask import redirect, request, Blueprint, render_template, url_for
+from lib.models import BoardModel
 
-external = Blueprint('public', __name__)
+endpoints = Blueprint('public', __name__)
 
 variables = {
     'title': 'Home',
@@ -8,11 +9,22 @@ variables = {
     'cache': 1
 }
 
-@external.route('/', methods=['GET'])
-def public():
+@endpoints.route('/', methods=['GET'])
+def home():
     return render_template('home.html', data=variables)
 
-@external.route('/create-board', methods=['POST'])
-def login():
-    variables['title'] = "Create A Board"
-    return render_template('board.html', data=variables)
+@endpoints.route('/create-board', methods=['POST'])
+def create_board():
+    bm = BoardModel()
+    seed = request.json.get('seed')
+    name = request.json.get('name')
+    # TODO: Might want to move this to JS
+    # if not name and not seed:
+    #     return render_template('error.html', data=variables)
+    # id = bm.create_new(seed, name)
+    # if id:
+    #     board = bm.get({'id': id})
+    #     return redirect(url_for('.board', hash=board.hash))
+    # else:
+    #     return render_template('error.html', data=variables)
+    return redirect(url_for('board.get_board', hash='board.hash'))

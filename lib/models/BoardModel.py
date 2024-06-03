@@ -13,13 +13,14 @@ class BoardModel(BaseModel):
         # Convert seed into SHA224 hash
         hash = BoardModel.generate_hash(seed)
         # Create dataclass and convert to dict
-        tag = Board(hash=hash, name=name, is_active=is_active).dict()
+        tag = Board(hash=hash, name=name, is_active=int(is_active)).dict()
         try:
             # Derive columns and values from dict
             columns, values = self.split(tag)
             id = self.db.insert('boards', columns, values)
             return id
-        except:
+        except Exception as e:
+            print(e)
             # TODO: add logging at some point
             print("Unable to create board")
 
