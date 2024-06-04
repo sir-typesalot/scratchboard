@@ -1,4 +1,4 @@
-from flask import redirect, request, Blueprint, render_template, url_for
+from flask import redirect, Blueprint, render_template, url_for
 from lib.models import BoardModel
 
 board = Blueprint('board', __name__)
