@@ -2,7 +2,7 @@
     Import the app object from routes and make accessible to higher levels.
 """
 from flask import Flask
-from .routes import tags, board, endpoints
+from .routes import tags, board, endpoints, tasks
 
 webapp = Flask(
     __name__,
@@ -13,3 +13,4 @@ webapp.secret_key = '93843hserj39sfsw3'
 webapp.register_blueprint(endpoints)
 webapp.register_blueprint(board)
 webapp.register_blueprint(tags)
+webapp.register_blueprint(tasks)
