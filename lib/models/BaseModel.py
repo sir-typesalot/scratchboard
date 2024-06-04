@@ -1,7 +1,7 @@
 import logging
 from lib.DBHandler import Scribe
 
-logging.basicConfig(level = logging.INFO)
+logging.basicConfig(level=logging.INFO)
 
 class BaseModel(object):
 
