@@ -33,7 +33,7 @@ class BoardModel(BaseModel):
         if not board:
             return None
         else:
-            board = self.sanitize(board, Board.headers())
+            board = self.sanitize(board[0], Board.headers())
             return Board(**board)
 
     def modify(self, board: Board):

@@ -1,17 +1,15 @@
 from lib.DBHandler import Scribe
-from lib.models.BaseModel import BaseModel
+from lib.models.BoardBaseModel import BoardBaseModel
 from lib.DataClasses import Task
 
-class TaskModel(BaseModel):
+class TaskModel(BoardBaseModel):
+    DATACLASS = Task
+    BASE_TABLE = 'board_tasks'
 
-    def __init__(self):
-        super().__init__()
-        self.db = Scribe()
-
-    def create(self, board_id: int, title: str, description: str = '', tag_id: int = 1):
+    def create(self, title: str, description: str = '', tag_id: int = 1):
         # Create dataclass and convert to dict
         task = Task(
-            board_id=board_id,
+            board_id=self.board_id,
             tag_id=tag_id,
             title=title,
             description=description
@@ -26,17 +24,9 @@ class TaskModel(BaseModel):
             # add logging at some point
             print("Unable to create task")
 
-    def exists(self, name: str, board_id: int):
-        data = self.get({'tag_name': name, 'board_id': board_id})
+    def exists(self, name: str):
+        data = self.get({'tag_name': name, 'board_id': self.board_id})
         return True if data else False
-
-    def get(self, search_term: dict):
-        task = self.db.read('board_tasks', search_term)
-        if not task:
-            return None
-        else:
-            task = self.sanitize(task, Task.headers())
-            return Task(**task)
 
     def modify(self, task: Task):
         conditions = [f"task_id = '{task.task_id}'"]

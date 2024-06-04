@@ -8,7 +8,7 @@ class Scribe(object):
         self.db = DB(db=Config.SCHEMA).db_connect
         self.logger = logging.getLogger("scribe")
 
-    def read(self, table: str, values: dict, fetch_all=False):
+    def read(self, table: str, values: dict):
         """Simple GET operation to fetch from table in DB
 
         Args:
@@ -17,10 +17,7 @@ class Scribe(object):
             fetch_all (bool, optional): Whether to fetch all results of one. Defaults to False.
 
         Returns:
-            if fetch_all:
-                list: List of rows, represented as dicts
-            else:
-                dict: Singular row result
+            (list): results
         """
         with self.db('dict') as cursor:
             cursor.execute(f"""
@@ -29,10 +26,7 @@ class Scribe(object):
             """, tuple(values.values()))
             data = cursor.fetchall()
 
-        if data and not fetch_all:
-            return data[0]
-        else:
-            return data
+        return data if data else []
 
     def insert(self, table: str, columns: list, values: list):
         """Method to perform simple INSERT operation
