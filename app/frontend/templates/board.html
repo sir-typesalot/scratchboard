@@ -1,7 +1,60 @@
-{% extends "components/base_protected.html" %}
+{% extends "components/base.html" %}
 {% block content %}
-<div class="container mt-2">
-    <div class="tab-content responsive">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col border-end">
+            <div class="card-body">
+                <div class="title">
+                    <h2>ToDo</h2>
+                    <div class="list-to-do">
+                        <button type="button" class="btn btn-circle btn-transparent" data-bs-toggle="modal" data-bs-target="#toDoModal">
+                            <span class="bi bi-plus-circle h5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col border-end">
+            <div class="card-body">
+                <h2>In Progess</h2>
+                <div class="list-in-progress">
+                    <button type="button" class="btn btn-circle btn-transparent">
+                        <span class="bi bi-plus-circle h5"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card-body">
+                <h2>Done</h2>
+                <div class="list-done">
+                    <button type="button" class="btn btn-circle btn-transparent">
+                        <span class="bi bi-plus-circle h5"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="toDoModal" tabindex="-1" aria-labelledby="toDoModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <!-- <input class="modal-title" id="toDoModal">Modal title</input> -->
+              <input type="text" class="form-control" id="taskTitle" placeholder="Task Name"></input>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              ...   
+            </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- <div class="tab-content responsive">
         <div class="tab-pane fade show active" id="routines">
             {% include "components/routines.html" %}
         </div>
@@ -14,6 +67,6 @@
         <div class="tab-pane fade" id="account">
             <p>Account settings and logout</p>
         </div>
-    </div>
+    </div> -->
 </div>
 {% endblock %}

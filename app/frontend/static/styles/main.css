@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@100;200;300;400&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
 :root {
     --blue: #1e90ff;
     --white: #E7EDEB;
@@ -17,6 +18,9 @@
     --blue-light: #81A1C1;
     --blue-med: #4C566A;
     --blue-dark: #3B4252;
+
+    --grey-dark: #333333;
+    --gery-light: #454545;
 
 }
 html { min-height: 100% }
@@ -87,9 +91,30 @@ body {
 .form-text {
     color: var(--blue-light);
 }
-.btn {
+.btn-sm {
     width: 25%;
     margin: .5em .5em;
+}
+.btn-circle {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    border-radius: 20px;
+    padding: 0 0;
+    margin: 0 0;
+    color: var(--blue-med);
+    transition: 0.3s;
+    transform: rotate(0turn);
+    transform-origin:10 10;
+}
+/* .bi-plus-circle.icon-12 {
+    width: 24px;
+    height: 24px;
+} */
+.btn-circle:hover {
+    transition: 0.3s;
+    transform: rotate(0.5turn);
+    transform-origin:10 10;
 }
 input {
     margin: .5em 0rem;
