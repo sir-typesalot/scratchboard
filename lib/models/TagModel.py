@@ -1,4 +1,3 @@
-from lib.DBHandler import Scribe
 from lib.models.BoardBaseModel import BoardBaseModel
 from lib.DataClasses import Tag
 
