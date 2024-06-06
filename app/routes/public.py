@@ -13,6 +13,10 @@ variables = {
 def home():
     return render_template('home.html', data=variables)
 
+@endpoints.route('/test', methods=['GET'])
+def test_board():
+    return render_template('board.html', data=variables)
+
 @endpoints.route('/create-board', methods=['POST'])
 def create_board():
     bm = BoardModel()
