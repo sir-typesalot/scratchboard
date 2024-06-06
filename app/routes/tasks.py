@@ -1,4 +1,4 @@
-from flask import request, Blueprint, render_template
+from flask import jsonify, request, Blueprint, render_template
 from lib.models.TaskModel import TaskModel
 
 tasks = Blueprint('task', __name__, url_prefix='/board')
@@ -15,27 +15,35 @@ def get_tasks(hash):
     tasks = task_model.get()
     return tasks
 
-@tasks.route('/<string:hash>/task/<int:task_id>', methods=['GET'])
+@tasks.route('/<string:hash>/tasks/<int:task_id>', methods=['GET'])
 def get_task(hash, task_id):
     task_model = TaskModel(hash)
     task = task_model.get({'task_id': task_id})
-    return task[0] if task else []
+    task = task[0] if task else []
+    return jsonify(task)
 
-@tasks.route('/<string:hash>/task/new', methods=['POST'])
+@tasks.route('/<string:hash>/tasks/new', methods=['POST'])
 def create_task(hash):
     task_model = TaskModel(hash)
+    response = {}
     # Get params
     title = request.json.get('title')
     description = request.json.get('description')
     tag_id = request.json.get('tag_id')
 
-    tags = task_model.create(title, description, tag_id)
-    return tags
+    try:
+        response['task_id'] = task_model.create(title, description, tag_id)
+        response['status'] = 200
+    except NameError:
+        response['task_id'] = None
+        response['status'] = 302
 
-@tasks.route('/<string:hash>/task/<int:task_id>/modify', methods=['PUT'])
+    return jsonify(response)
+
+@tasks.route('/<string:hash>/tasks/<int:task_id>/modify', methods=['PUT'])
 def modify_task(hash, task_id):
     return {}
 
-@tasks.route('/<string:hash>/task/<int:task_id>/delete', methods=['DELETE'])
+@tasks.route('/<string:hash>/tasks/<int:task_id>/delete', methods=['DELETE'])
 def delete_task(hash, task_id):
     return render_template('error.html', data=variables)

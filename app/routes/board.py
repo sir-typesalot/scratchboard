@@ -11,15 +11,16 @@ variables = {
 
 @board.route('/board/<string:hash>', methods=['GET'])
 def get_board(hash):
-    variables['title'] = "Project Board"
+    # TODO: get board from hash, use board.id to get the tasks and tags for board
+    # No need to get comments, we won't see that here
     return render_template('board.html', data=variables)
 
 @board.route('/board/<string:hash>/modify', methods=['POST'])
 def modify_board(hash):
-    variables['title'] = "Project Board"
+    # TODO: Modify the baord and return the data to be rendered into the page
     return render_template('board.html', data=variables)
 
 @board.route('/board/<string:hash>/delete', methods=['DELETE'])
 def delete_board(hash):
-    variables['title'] = "Project Board"
+    # TODO: delete board and return status, then route to home page
     redirect(url_for('public.home'))
