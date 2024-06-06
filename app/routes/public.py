@@ -18,12 +18,15 @@ def create_board():
     bm = BoardModel()
     seed = request.json.get('seed')
     name = request.json.get('name')
-    # TODO: Might want to move this to JS
-    if not name and not seed:
+    # TODO: Need to add checks for seed and name on JS side
+    try:
+        id = bm.create_new(seed, name)
+    except:
+        # TODO: need to figured out how to handle the errors
+        pass
+
+    if not id:
         return render_template('error.html', data=variables)
-    id = bm.create_new(seed, name)
-    if id:
-        board = bm.get({'id': id})
-        return redirect(url_for('board.get_board', hash=board.hash))
-    else:
-        return render_template('error.html', data=variables)
+
+    board = bm.get({'id': id})
+    return redirect(url_for('board.get_board', hash=board.hash))

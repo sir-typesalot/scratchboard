@@ -9,6 +9,7 @@ class TagModel(BoardBaseModel):
         # Create dataclass and convert to dict
         tag = Tag(tag_name=name, board_id=self.board_id, description=description).dict()
         try:
+            print(tag)
             # Derive columns and values from dict
             columns, values = self.split(tag)
             id = self.db.insert('board_tags', columns, values)
