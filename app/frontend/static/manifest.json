@@ -1,11 +1,28 @@
 {
-  "name": "ScratchBoard",
+  "name": "Scratch Board",
   "short_name": "ScratchBoard",
-  "start_url": "https://gym-journal.com/login",
+  "start_url": "https://scratchboard.com/",
   "display": "fullscreen",
-  "icons": [{
-    "src": "images/barbell-icon.png",
-    "sizes": "256x256",
-    "type": "image/png"
-  }]
+  "icons": [
+    {
+      "src": "icon_small.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "android_medium.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "android_large.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
