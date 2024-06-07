@@ -32,12 +32,12 @@ def create_tag(hash):
 
     try:
         response['tag_id'] = tag_model.create_new(name, description)
-        response['status'] = 200
+        status = 200
     except NameError:
         response['tag_id'] = None
-        response['status'] = 302
+        status = 302
 
-    return jsonify(response)
+    return jsonify(response), status
 
 @tags.route('/<string:hash>/tags/<int:tag_id>/modify', methods=['PUT'])
 def modify_tag(hash, tag_id):

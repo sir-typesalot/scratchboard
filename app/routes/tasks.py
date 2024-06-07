@@ -33,12 +33,12 @@ def create_task(hash):
 
     try:
         response['task_id'] = task_model.create(title, description, tag_id)
-        response['status'] = 200
+        status = 200
     except NameError:
         response['task_id'] = None
-        response['status'] = 302
+        status = 302
 
-    return jsonify(response)
+    return jsonify(response), status
 
 @tasks.route('/<string:hash>/tasks/<int:task_id>/modify', methods=['PUT'])
 def modify_task(hash, task_id):
