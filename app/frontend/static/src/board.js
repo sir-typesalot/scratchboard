@@ -17,7 +17,6 @@ $(document).ready(function() {
                 };
             }
         });
-
         $('#taskTitle').trigger('focus');
     });
 
@@ -34,4 +33,24 @@ $(document).ready(function() {
         // Close the modal after saving the task
         $('#taskModal').modal('hide');
     });
+
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: `${window.location.pathname}/tasks`,
+        success: function(response) {
+            console.log(response);
+            renderData(response.data);
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX Error:', status, error);
+        }
+    });
 });
+
+function renderData(data) {
+    data.forEach(item => {
+        let container = $(`#${item.status}-lane`);
+        container.append('<p>' + item.title + '</p>');
+    });
+}

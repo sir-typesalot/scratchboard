@@ -1,5 +1,6 @@
 from flask import jsonify, request, Blueprint, render_template
 from lib.models.TaskModel import TaskModel
+from app.decorators import make_response
 
 tasks = Blueprint('task', __name__, url_prefix='/board')
 
@@ -10,6 +11,7 @@ variables = {
 }
 
 @tasks.route('/<string:hash>/tasks', methods=['GET'])
+@make_response
 def get_tasks(hash):
     task_model = TaskModel(hash)
     tasks = task_model.get()

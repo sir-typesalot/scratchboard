@@ -1,13 +1,17 @@
 {% extends "components/base.html" %}
+{% block imports %}
+<script src="{{ url_for('static', filename='src/board.js') }}" type="text/javascript"></script>
+{% endblock %}
 {% block content %}
 <div class="container-fluid">
-    
+
     <div class="row">
         <div class="col border-end">
             <div class="card-body">
                 <div class="title">
                     <h2>ToDo</h2>
                     <div class="list-to-do">
+                        <div class="taskContainer" id="todo-lane"></div>
                         <button class="btn btn-transparent btn-circle" data-bs-toggle="modal" data-bs-target="#taskModal">
                             <span class="bi bi-plus-circle"></span>
                         </button>
@@ -19,6 +23,7 @@
             <div class="card-body">
                 <h2>In Progess</h2>
                 <div class="list-in-progress">
+                    <div class="taskContainer" id="progress-lane"></div>
                     <button type="button" class="btn btn-circle btn-transparent">
                         <span class="bi bi-plus-circle h5"></span>
                     </button>
@@ -29,6 +34,7 @@
             <div class="card-body">
                 <h2>Done</h2>
                 <div class="list-done">
+                    <div class="taskContainer" id="done-lane"></div>
                     <button type="button" class="btn btn-circle btn-transparent">
                         <span class="bi bi-plus-circle h5"></span>
                     </button>

@@ -25,6 +25,7 @@ $(document).ready(function() {
             success: function(response) {
                 window.location.href = response.redirect_url;
             }
+            // Need to handle errors gracefully
          });
     });
 })
