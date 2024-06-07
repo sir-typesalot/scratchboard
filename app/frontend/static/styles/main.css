@@ -88,7 +88,7 @@ body {
 .form-group{
     margin: .5em .5em;
     text-align: center;
-    
+
 }
 .form-control.size-sm{
     width: 50%;
@@ -127,7 +127,10 @@ body {
     position: absolute;
     left:auto;
     right: 8px;
-    
+}
+
+.btn-press:active {
+    transform: translateY(1px);
 }
 
 .btn-sm {

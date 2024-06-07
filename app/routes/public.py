@@ -1,4 +1,4 @@
-from flask import redirect, request, Blueprint, render_template, url_for
+from flask import jsonify, request, Blueprint, render_template, url_for
 from lib.models import BoardModel
 
 endpoints = Blueprint('public', __name__)
@@ -33,4 +33,4 @@ def create_board():
         return render_template('error.html', data=variables)
 
     board = bm.get({'id': id})
-    return redirect(url_for('board.get_board', hash=board.hash))
+    return jsonify(redirect_url=url_for('board.get_board', hash=board.hash)), 200
