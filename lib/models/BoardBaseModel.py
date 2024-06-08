@@ -10,7 +10,7 @@ class BoardBaseModel(BaseModel):
         self.board_id = board.id if board else None
         super().__init__()
 
-    def get(self, search_term: dict={}):
+    def get(self, search_term: dict={}, fetchone=False):
         # Use board_id as default
         search_term['board_id'] = self.board_id
         results = []
@@ -19,7 +19,10 @@ class BoardBaseModel(BaseModel):
         for row in data:
             results.append(self.convert_to_class(row))
 
-        return results
+        if not results:
+            # Return this since it would be an empty list anyways
+            return results
+        return results if not fetchone else results[0]
 
     def convert_to_class(self, data_dict):
         if not data_dict:

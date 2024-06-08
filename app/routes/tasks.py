@@ -1,5 +1,6 @@
 from flask import jsonify, request, Blueprint, render_template
 from lib.models.TaskModel import TaskModel
+from lib.models.TagModel import TagModel
 from app.decorators import make_response
 
 tasks = Blueprint('task', __name__, url_prefix='/board')
@@ -31,10 +32,16 @@ def create_task(hash):
     # Get params
     title = request.json.get('title')
     description = request.json.get('description')
-    tag_id = request.json.get('tag_id')
+    tag_name = request.json.get('tag')
+    status = request.json.get('status')
+    due_date = request.json.get('dueDate')
+
+    # TODO: We need to handle when a tag doesn't exist, ie. create it
+    # Then pass the id down to create task
+    tag = TagModel(hash).get({'tag_name': tag_name}, fetchone=True)
 
     try:
-        response['task_id'] = task_model.create(title, description, tag_id)
+        response['task_id'] = task_model.create(title, description, tag.tag_id)
         status = 200
     except NameError:
         response['task_id'] = None

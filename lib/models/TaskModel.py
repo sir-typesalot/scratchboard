@@ -5,13 +5,14 @@ class TaskModel(BoardBaseModel):
     DATACLASS = Task
     BASE_TABLE = 'board_tasks'
 
-    def create(self, title: str, description: str = '', tag_id: int = 1):
+    def create(self, title: str, description: str='', tag_id: int=1, status: str='todo'):
         # Create dataclass and convert to dict
         task = Task(
             board_id=self.board_id,
             tag_id=tag_id,
             title=title,
-            description=description
+            description=description,
+            status=status
         ).dict()
         try:
             # Derive columns and values from dict
