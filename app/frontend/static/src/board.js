@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    // Load tasks first thing
+    loadTaskData();
     // Initialize Select2 with tag creation enabled
     $('#taskModal').on('shown.bs.modal', function(){
         $('#taskTag').select2({
@@ -24,16 +26,53 @@ $(document).ready(function() {
         const taskTitle = $('#taskTitle').val();
         const taskTag = $('#taskTag').val();
         const dueDate = $('#dueDate').val();
-        const taskCategory = $('#taskCategory').val();
-        const taskComments = $('#taskComments').val();
+        const taskStatus = $('#taskStatus').val();
+        const taskDescription = $('#taskDescription').val();
 
-        // Add your logic to save the task here
-        // For example, you might use AJAX to send the data to your server
-
-        // Close the modal after saving the task
-        $('#taskModal').modal('hide');
+        console.log(`${taskTitle} ${taskTag} ${dueDate} ${taskStatus} ${taskDescription}`);
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            url: `${window.location.pathname}/tasks/new`,
+            data: JSON.stringify({
+                title: taskTitle,
+                tag: taskTag,
+                dueDate: dueDate,
+                status: taskStatus,
+                description: taskDescription
+            }),
+            success: function() {
+                location.reload(true);
+            }
+            // Need to handle errors gracefully
+        });
     });
+});
 
+// Function to format tasks data that we get from the API into swimlanes
+function renderData(data) {
+    // Clean out the lanes since we populate them
+    $('.swimlane').empty();
+
+    data.forEach(item => {
+        let container = $(`#${item.status}-lane`);
+        let url = `${window.location.pathname}/tasks/${item.task_id}`;
+        container.append(`
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="${url}">
+                        ${item.title}
+                    </a>
+                </h5>
+            </div>
+        </div>
+        `)
+    });
+}
+
+function loadTaskData() {
     $.ajax({
         type: "GET",
         dataType: "json",
@@ -45,12 +84,5 @@ $(document).ready(function() {
         error: function(xhr, status, error) {
             console.error('AJAX Error:', status, error);
         }
-    });
-});
-
-function renderData(data) {
-    data.forEach(item => {
-        let container = $(`#${item.status}-lane`);
-        container.append('<p>' + item.title + '</p>');
     });
 }

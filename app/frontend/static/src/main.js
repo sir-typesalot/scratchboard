@@ -26,6 +26,6 @@ $(document).ready(function() {
                 window.location.href = response.redirect_url;
             }
             // Need to handle errors gracefully
-         });
+        });
     });
 })

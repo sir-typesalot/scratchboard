@@ -9,9 +9,9 @@
         <div class="col border-end">
             <div class="card-body">
                 <div class="title">
-                    <h2>ToDo</h2>
+                    <h2>To Do</h2>
                     <div class="list-to-do">
-                        <div class="taskContainer" id="todo-lane"></div>
+                        <div class="taskContainer" class="swimlane" id="todo-lane"></div>
                         <button class="btn btn-transparent btn-circle" data-bs-toggle="modal" data-bs-target="#taskModal">
                             <span class="bi bi-plus-circle"></span>
                         </button>
@@ -23,8 +23,8 @@
             <div class="card-body">
                 <h2>In Progess</h2>
                 <div class="list-in-progress">
-                    <div class="taskContainer" id="progress-lane"></div>
-                    <button type="button" class="btn btn-circle btn-transparent">
+                    <div class="taskContainer" class="swimlane" id="progress-lane"></div>
+                    <button class="btn btn-circle btn-transparent" data-bs-toggle="modal" data-bs-target="#taskModal">
                         <span class="bi bi-plus-circle h5"></span>
                     </button>
                 </div>
@@ -34,8 +34,8 @@
             <div class="card-body">
                 <h2>Done</h2>
                 <div class="list-done">
-                    <div class="taskContainer" id="done-lane"></div>
-                    <button type="button" class="btn btn-circle btn-transparent">
+                    <div class="taskContainer" class="swimlane" id="done-lane"></div>
+                    <button class="btn btn-circle btn-transparent" data-bs-toggle="modal" data-bs-target="#taskModal">
                         <span class="bi bi-plus-circle h5"></span>
                     </button>
                 </div>
@@ -72,22 +72,22 @@
                             <input type="datetime-local" class="form-control shadow-none bg-dark" id="dueDate">
                         </div>
                         <div class="mb-3">
-                            <label for="taskCategory" class="form-label">Category</label>
-                            <select class="form-select bg-dark" id="taskCategory">
+                            <label for="taskStatus" class="form-label">Status</label>
+                            <select class="form-select bg-dark" id="taskStatus">
                                 <option value="todo">To Do</option>
                                 <option value="inprogress">In Progress</option>
                                 <option value="done">Done</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="taskComments" class="form-label">Comments</label>
-                            <textarea class="form-control bg-dark" id="taskComments" rows="3" placeholder="Enter comments"></textarea>
+                            <label for="taskDescription" class="form-label">Description</label>
+                            <textarea class="form-control bg-dark" id="taskDescription" rows="3" placeholder="Enter description"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="saveTask">Save changes</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="saveTask">Save changes</button>
                 </div>
             </div>
         </div>
