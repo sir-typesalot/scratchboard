@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    // Handle navbar function
+    // // Handle navbar function
     $('.navbar-nav>li>a').on('click', function(){
         $('#navbarNavDropdown').collapse('hide');
     });
@@ -7,10 +7,8 @@ $(document).ready(function() {
     $('#createBoard').on('click', function(){
         // Get variable
         const boardTitle = $('#boardTitle').val();
-        const boardSeed = $('#boardSeed').val();
         console.log(JSON.stringify({
-            name: boardTitle,
-            seed: boardSeed
+            name: boardTitle
         }));
         // Post request to create board
         $.ajax({
@@ -19,8 +17,7 @@ $(document).ready(function() {
             contentType: "application/json; charset=utf-8",
             url: "/create-board",
             data: JSON.stringify({
-                name: boardTitle,
-                seed: boardSeed
+                name: boardTitle
             }),
             success: function(response) {
                 window.location.href = response.redirect_url;

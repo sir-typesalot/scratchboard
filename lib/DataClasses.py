@@ -45,7 +45,6 @@ class Tag(BaseClass):
     tag_name: str
     board_id: int = 0
     tag_id: int = 0
-    description: str = ''
 
 @dataclass
 class Comment(BaseClass):

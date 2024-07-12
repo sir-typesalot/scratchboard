@@ -20,11 +20,10 @@ def test_board():
 @endpoints.route('/create-board', methods=['POST'])
 def create_board():
     bm = BoardModel()
-    seed = request.json.get('seed')
     name = request.json.get('name')
     # TODO: Need to add checks for seed and name on JS side
     try:
-        id = bm.create_new(seed, name)
+        id = bm.create(name)
     except:
         # TODO: need to figured out how to handle the errors
         pass

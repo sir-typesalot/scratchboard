@@ -5,9 +5,9 @@ class TagModel(BoardBaseModel):
     DATACLASS = Tag
     BASE_TABLE = 'board_tags'
 
-    def create(self, name: str, description: str = ''):
+    def create(self, name: str):
         # Create dataclass and convert to dict
-        tag = Tag(tag_name=name, board_id=self.board_id, description=description).dict()
+        tag = Tag(tag_name=name, board_id=self.board_id).dict()
         try:
             print(tag)
             # Derive columns and values from dict
@@ -27,13 +27,13 @@ class TagModel(BoardBaseModel):
         conditions = [f"tag_id = '{tag.tag_id}'"]
         self.db.update('board_tags', tag.dict(), conditions)
 
-    def create_new(self, name, description):
+    def create_new(self, name):
         exists = self.exists(name)
         if exists:
             raise NameError(f"Tag {name} for board {self.board_id} already exists")
         else:
-            id = self.create(name, description)
-            return id
+            id = self.create(name)
+            return Tag(tag_name=name, board_id=self.board_id, tag_id=id)
 
     def delete(self, tag_id: int):
         values = {

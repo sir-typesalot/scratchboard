@@ -14,11 +14,9 @@ class BoardBaseModel(BaseModel):
         # Use board_id as default
         search_term['board_id'] = self.board_id
         results = []
-
         data = self.db.read(self.BASE_TABLE, search_term)
         for row in data:
             results.append(self.convert_to_class(row))
-
         if not results:
             # Return this since it would be an empty list anyways
             return results

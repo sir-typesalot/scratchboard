@@ -36,10 +36,10 @@ def create_task(hash):
     status = request.json.get('status')
     due_date = request.json.get('dueDate')
 
-    # TODO: We need to handle when a tag doesn't exist, ie. create it
     # Then pass the id down to create task
     tag = TagModel(hash).get({'tag_name': tag_name}, fetchone=True)
-
+    if not tag:
+        tag = TagModel(hash).create_new(tag_name)
     try:
         response['task_id'] = task_model.create(title, description, tag.tag_id)
         status = 200

@@ -11,7 +11,6 @@ CREATE TABLE board_tags (
     `board_id` INT DEFAULT NULL,
     `tag_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `tag_name` VARCHAR(25) NOT NULL,
-    `description` VARCHAR(256) DEFAULT NULL,
     FOREIGN KEY (`board_id`) REFERENCES `boards`(`id`)
 );
 

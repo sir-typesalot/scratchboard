@@ -4,24 +4,39 @@
     <header>
         <h1 class="mx-auto text-center">Scratch Board</h1>
         <p class="mx-auto text-center">
-            <i>The simplest board to manage all your personal projects</i>
+            <i>Manage your life with a kanban board</i>
         </p>
     </header>
 </div>
-<div class="container text-center">
-    <div class="card bg-dark">
-        <div class="form-group row justify-content-center">
-            <label for="boardTitle">Board Title</label>
-            <input type="text" class="form-control size-sm" id="boardTitle" placeholder="Enter Name">
-        </div>
-        <div class="form-group row justify-content-center">
-            <label for="boardSeed">Board Keyword</label>
-            <input type="text" class="form-control size-sm" id="boardSeed" placeholder="Enter Keyword">
-            <small class="form-text">Use the keyword to recover your board. This should NOT be sensative information such as an email or password.</small>
-        </div>
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary btn-press" id="createBoard">Create</button>
-        </div>
+<div class="container-fluid mt-5">
+    <div class="row">
+        <!-- <div class="col">
+            <div class="card bg-medium">
+
+            </div>
+        </div> -->
+        <div class="col">
+            <div class="card bg-medium">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="boardTitle">Board Title</label>
+                        <!-- ToDo: make inputs required -->
+                        <input type="text" class="form-control" id="boardTitle" placeholder="Enter Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="boardSeed">Your Email (Optional)</label>
+                        <input type="text" class="form-control" id="email" placeholder="example@gmail.com">
+                        <div class="form-text accent">
+                            We will send you a link to the board if you lose it, or just save/bookmark the link yourself.
+                            No spam ever!
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn blue btn-press" id="createBoard">Create</button>
+                    </div>
+                </div>
+            </div>
+        <!-- </div> -->
     </div>
 </div>
 {% endblock %}

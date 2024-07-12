@@ -1,6 +1,8 @@
 $(document).ready(function() {
     // Load tasks first thing
     loadTaskData();
+    loadTagData();
+
     // Initialize Select2 with tag creation enabled
     $('#taskModal').on('shown.bs.modal', function(){
         $('#taskTag').select2({
@@ -50,8 +52,27 @@ $(document).ready(function() {
     });
 });
 
+//dragula JS
+$(function() {
+    dragula([
+        document.getElementById("todo-lane"),
+        document.getElementById("progress-lane"),
+        document.getElementById("done-lane")], {
+        removeOnSpill: false
+})
+  .on("drag", function(el) {
+    el.className.replace("ex-moved", "");
+  })
+  .on("drop", function(el) {
+    el.className += "ex-moved";
+});
+});
+
+
+
+
 // Function to format tasks data that we get from the API into swimlanes
-function renderData(data) {
+function renderTasks(data) {
     // Clean out the lanes since we populate them
     $('.swimlane').empty();
 
@@ -59,7 +80,7 @@ function renderData(data) {
         let container = $(`#${item.status}-lane`);
         let url = `${window.location.pathname}/tasks/${item.task_id}`;
         container.append(`
-        <div class="card">
+        <li class="card">
             <div class="card-body">
                 <h5 class="card-title">
                     <a href="${url}">
@@ -67,10 +88,24 @@ function renderData(data) {
                     </a>
                 </h5>
             </div>
-        </div>
+        </li>
+        `)
+    });
+
+
+
+}
+
+function renderTags(data) {
+    data.forEach(item => {
+        let containter = $(`#taskTag`);
+        let url = `${window.location.pathname}/tags/${item.tag_id}`;
+        containter.append(`
+        <option value = "${item.tag_name}">${item.tag_name}</option>
         `)
     });
 }
+
 
 function loadTaskData() {
     $.ajax({
@@ -78,8 +113,23 @@ function loadTaskData() {
         dataType: "json",
         url: `${window.location.pathname}/tasks`,
         success: function(response) {
-            console.log(response);
-            renderData(response.data);
+            // console.log(response);
+            renderTasks(response.data);
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX Error:', status, error);
+        }
+    });
+}
+
+function loadTagData() {
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: `${window.location.pathname}/tags`,
+        success: function(response) {
+            // console.log(response);
+            renderTags(response);
         },
         error: function(xhr, status, error) {
             console.error('AJAX Error:', status, error);
