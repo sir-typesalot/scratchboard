@@ -25,7 +25,7 @@ class Board(BaseClass):
     name: str
     create_datetime: datetime = datetime.now()
     # These are not needed for creating new rows in the DB since we auto increment
-    # Not sure how to handle this for now, so will just set the default to 0
+    # TODO: is_active not in use
     id: int = 0
     is_active: bool = True
 
@@ -33,6 +33,7 @@ class Board(BaseClass):
 class Task(BaseClass):
     title: str
     description: str = ''
+    # TODO: currently hard coded to hade TO_DO value, need to make it responsive to current swimlane
     status: StatusEnum = StatusEnum.TO_DO.value
     status_datetime: datetime = datetime.now()
     create_datetime: datetime = datetime.now()
@@ -45,6 +46,7 @@ class Tag(BaseClass):
     tag_name: str
     board_id: int = 0
     tag_id: int = 0
+    # TODO: set up hex value to tag
 
 @dataclass
 class Comment(BaseClass):

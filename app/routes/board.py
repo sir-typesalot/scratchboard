@@ -11,8 +11,11 @@ variables = {
 
 @board.route('/board/<string:hash>', methods=['GET'])
 def get_board(hash):
-    # TODO: get board from hash, use board.id to get the tasks and tags for board
-    # No need to get comments, we won't see that here
+    board_model = BoardModel().get({'hash' : hash})
+    variables['hash'] = board_model.hash
+    variables['name'] = board_model.name
+    variables['create_datatime'] = board_model.create_datetime
+    variables['is_active'] = board_model.is_active 
     return render_template('board.html', data=variables)
 
 @board.route('/board/<string:hash>/modify', methods=['POST'])

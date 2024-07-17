@@ -4,35 +4,42 @@
 {% endblock %}
 {% block content %}
 <div class="container-fluid">
+    <div class = "navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand">{{data.name}}</a>
+        </div>
+    </div>
     <div class="row">
-        <div class="col border-end">
+        <div class="col border">
            <div class="col-header">
-               <h2>To Do</h2>
+                <div class="header-title">To Do</div>
+                <button class="btn btn-transparent btn-circle" data-bs-toggle="modal" data-bs-target="#taskModal">
+                    <span class="bi bi-plus-circle"></span>
+                </button>
            </div>
-           <button class="btn btn-transparent btn-circle" data-bs-toggle="modal" data-bs-target="#taskModal">
-               <span class="bi bi-plus-circle"></span>
-           </button>
            <div class="swimlane" id="todo-lane"></div>
         </div>
-        <div class="col border-end">
+        <div class="col border">
             <div class="col-header">
-                <h2>In Progess</h2>
+                <div class="header-title">In Progress</div>
+                <button class="btn btn-circle btn-transparent" data-bs-toggle="modal" data-bs-target="#taskModal">
+                    <span class="bi bi-plus-circle"></span>
+                </button>
             </div>
-            <button class="btn btn-circle btn-transparent" data-bs-toggle="modal" data-bs-target="#taskModal">
-                <span class="bi bi-plus-circle h5"></span>
-            </button>
             <div class="swimlane" id="progress-lane"></div>
         </div>
-        <div class="col">
+        <div class="col border">
             <div class="col-header">
-                <h2>Done</h2>
+                <div class="header-title">Done</div>
+                <button class="btn btn-circle btn-transparent" data-bs-toggle="modal" data-bs-target="#taskModal">
+                    <span class="bi bi-plus-circle"></span>
+                </button>
             </div>
-            <button class="btn btn-circle btn-transparent" data-bs-toggle="modal" data-bs-target="#taskModal">
-                <span class="bi bi-plus-circle h5"></span>
-            </button>
+
             <div class="swimlane" id="done-lane"></div>
         </div>
     </div>
+    
 
     <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -65,7 +72,7 @@
                             <label for="taskStatus" class="form-label">Status</label>
                             <select class="form-select bg-dark" id="taskStatus">
                                 <option value="todo">To Do</option>
-                                <option value="inprogress">In Progress</option>
+                                <option value="progress">In Progress</option>
                                 <option value="done">Done</option>
                             </select>
                         </div>

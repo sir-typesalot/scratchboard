@@ -33,7 +33,7 @@ def create_task(hash):
     title = request.json.get('title')
     description = request.json.get('description')
     tag_name = request.json.get('tag')
-    status = request.json.get('status')
+    task_status = request.json.get('status')
     due_date = request.json.get('dueDate')
 
     # Then pass the id down to create task
@@ -41,7 +41,7 @@ def create_task(hash):
     if not tag:
         tag = TagModel(hash).create_new(tag_name)
     try:
-        response['task_id'] = task_model.create(title, description, tag.tag_id)
+        response['task_id'] = task_model.create(title, description, tag.tag_id, task_status)
         status = 200
     except NameError:
         response['task_id'] = None
@@ -51,6 +51,27 @@ def create_task(hash):
 
 @tasks.route('/<string:hash>/tasks/<int:task_id>/modify', methods=['PUT'])
 def modify_task(hash, task_id):
+
+    title = request.json.get('title')
+    description = request.json.get('description')
+    tag_name = request.json.get('tag')
+    task_status = request.json.get('status')
+    due_date = request.json.get('dueDate')
+
+    task = TaskModel(hash).get({"task_id": task_id}, fetchone= True)
+
+    if task_status is not None:
+        task.status = task_status
+    elif title is not None:
+        task.title = title
+    elif description is not None:
+        task.status = description
+    elif tag_name is not None:
+        task.tag_name = tag_name
+    elif due_date is not None:
+        task.due_date = due_date
+    
+    TaskModel(hash).modify(task)
     return {}
 
 @tasks.route('/<string:hash>/tasks/<int:task_id>/delete', methods=['DELETE'])

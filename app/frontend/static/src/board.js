@@ -50,6 +50,53 @@ $(document).ready(function() {
             // Need to handle errors gracefully
         });
     });
+
+    function adjustSwimlaneHeights() {
+        let maxHeight = 0;
+
+        // Calculate the maximum height of all swimlanes
+        $('.swimlane').each(function() {
+            let $this = $(this);
+            let currentHeight = $this.outerHeight();
+            if (currentHeight > maxHeight) {
+                maxHeight = currentHeight;
+            }
+        });
+
+        // Set all swimlanes to the maximum height
+        $('.swimlane').each(function() {
+            $(this).height(maxHeight);
+        });
+
+        // Adjust padding-bottom to extend to the bottom of the page
+        adjustSwimlanePadding();
+    }
+
+    function adjustSwimlanePadding() {
+        let windowHeight = $(window).height();
+
+        $('.swimlane').each(function() {
+            let $this = $(this);
+            let elementBottom = $this.offset().top + $this.outerHeight();
+            let paddingBottom = windowHeight - elementBottom;
+
+            // Ensure paddingBottom is not negative
+            if (paddingBottom > 0) {
+                $this.css('padding-bottom', paddingBottom + 'px');
+            } else {
+                $this.css('padding-bottom', '20px'); // Fallback padding
+            }
+        });
+    }
+
+    // Adjust swimlane heights and padding on page load
+    adjustSwimlaneHeights();
+
+    // Adjust swimlane heights and padding on window resize
+    $(window).resize(function() {
+        adjustSwimlaneHeights();
+    });
+
 });
 
 //dragula JS
@@ -59,17 +106,36 @@ $(function() {
         document.getElementById("progress-lane"),
         document.getElementById("done-lane")], {
         removeOnSpill: false
-})
-  .on("drag", function(el) {
+    })
+    .on("drag", function(el) {
     el.className.replace("ex-moved", "");
-  })
-  .on("drop", function(el) {
-    el.className += "ex-moved";
+    })
+    .on("drop", function(el, target) {
+        el.className += "ex-moved";
+        let newStatus = '';
+        if (target.id === 'todo-lane') {
+            newStatus = 'todo';
+        } else if (target.id === 'progress-lane') {
+            newStatus = 'progress';
+        } else if (target.id === 'done-lane') {
+            newStatus = 'done';
+        }
+        const taskID = el.getAttribute('data-id');
+        $.ajax({
+            type: "PUT",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            // what should item.task_id = ?
+            url: `${window.location.pathname}/tasks/${taskID}/modify`,
+            data: JSON.stringify({
+                status: newStatus
+            }),
+            sucess: function() {
+                adjustSwimlaneHeights();
+            }
+        });
+    });
 });
-});
-
-
-
 
 // Function to format tasks data that we get from the API into swimlanes
 function renderTasks(data) {
@@ -80,7 +146,7 @@ function renderTasks(data) {
         let container = $(`#${item.status}-lane`);
         let url = `${window.location.pathname}/tasks/${item.task_id}`;
         container.append(`
-        <li class="card">
+        <li class="card" data-id = "${item.task_id}">
             <div class="card-body">
                 <h5 class="card-title">
                     <a href="${url}">
@@ -91,9 +157,6 @@ function renderTasks(data) {
         </li>
         `)
     });
-
-
-
 }
 
 function renderTags(data) {
@@ -105,7 +168,6 @@ function renderTags(data) {
         `)
     });
 }
-
 
 function loadTaskData() {
     $.ajax({
@@ -129,7 +191,6 @@ function loadTagData() {
         url: `${window.location.pathname}/tags`,
         success: function(response) {
             // console.log(response);
-            renderTags(response);
         },
         error: function(xhr, status, error) {
             console.error('AJAX Error:', status, error);

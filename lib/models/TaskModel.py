@@ -17,6 +17,8 @@ class TaskModel(BoardBaseModel):
         try:
             # Derive columns and values from dict
             columns, values = self.split(task)
+            print(columns)
+            print(values)
             id = self.db.insert('board_tasks', columns, values)
             return id
         except Exception as e:
